@@ -11,7 +11,7 @@ load_dotenv()
 if os.getenv('ENV') == 'test':
     database_path = os.getenv('TEST_DATABASE_URL')
 else:
-    database_path = os.getenv('DATABASE_URL') '''
+    database_path = os.getenv('DATABASE_URL')
 
 
 #database_path = 'postgres://wfibbbdvfotooy:518680c500c2556955c4199dabdbdc7283423c457ee794ee1f8114849c08b799@ec2-54-242-43-231.compute-1.amazonaws.com:5432/dog9le7l3fa6n'
