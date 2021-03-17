@@ -19,9 +19,6 @@ RBAC using Auth0
 - Casting Director
 - Executive Producer
 
-[Login]
-(https://codebro.us.auth0.com/authorize?audience=http://127.0.0.1:5000/&response_type=token&client_id=ay3JCTrfUNAaPQskWcpYNDLEAUMCcUqG&redirect_uri=http://localhost:5000/) using credentials provided for each roles.
-
 ## Technologies and Services used
 - Python
 - Flask

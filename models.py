@@ -14,8 +14,6 @@ else:
     database_path = os.getenv('DATABASE_URL')
 
 
-#database_path = 'postgres://postgres:123456@localhost:5432/newcapstone'
-
 db = SQLAlchemy()
 
 '''

@@ -5,7 +5,7 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = 'codebro.us.auth0.com'
+AUTH0_DOMAIN = 'AUTH0_DOMAIN'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'http://127.0.0.1:5000/'
 
