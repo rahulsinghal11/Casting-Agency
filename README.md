@@ -1,49 +1,46 @@
 # Casting Agency
-##### Udacity Full stack Nanodegree Capstone Project
 
-The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
+## Motivation
+The motivation for this project is to create my capstone project for Udacity's Fullstack Nanodegree program. It models a company that is responsible for creating movies and managing and assigning actors to those movies. The assumption is that I am an Executive Producer within the company and wants to create a system to simplify and streamline my process process.
+This project covers all the learnt concepts that were covered by the nanodegree which includes data modeling for web using postgres, API development and testing with Flask, Authorization with RBAC, JWT authentication and finally API deployment using Heroku.
 
 ## API URL 
-- **Heroku:** [base URL](https://fsnd-casting-capstone.herokuapp.com/)
-- **Localhost:** base URL is localhost:5000
-
+- **Localhost:** [base URL] localhost:5000
+- **Heroku:** [base URL](https://capstone-casting-agency53.herokuapp.com/)
 
 ## Features
 - Create and manage ators as well as movies
 
 ## Authentication and Authorisation
-Authentication is implemented in the form of Role Based Access Control using Auth0
-#### Roles
-- Executive Producer
-- Casting Director
-- Casting Assistance
+RBAC using Auth0
 
-[Login](https://casting-auth.auth0.com/authorize?audience=casting&response_type=token&client_id=ZxcJivQqX87uY1D9yfGha68zdJ2tN0Od&redirect_uri=https://127.0.0.1:8080/login-result) using the credentials provided for each roles.
+#### Roles
+- Casting Assistant
+- Casting Director
+- Executive Producer
+
+[Login]
+(https://codebro.us.auth0.com/authorize?audience=http://127.0.0.1:5000/&response_type=token&client_id=ay3JCTrfUNAaPQskWcpYNDLEAUMCcUqG&redirect_uri=http://localhost:5000/) using credentials provided for each roles.
 
 ## Technologies and Services used
 - Python
 - Flask
-- Flask-CORS
 - Flask-Migrate
+- Flask-CORS
 - Unittest
 - SQLAlchemy
-- Autopep8
 - Auth0
 - PostgreSQL
+- Autopep8
 
-## Installation and Database Setup
-Clone the repo by running 
-
-```bash
-git clone https://github.com/Hadeneekeh/casting-agency.git
-```
 ### Dependencies
 #### Python 3.7
 
-Follow instructions to install the latest version of python for your platform in the [python docs](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
+Follow instructions [python docs](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
+
 #### Virtual Enviornment
 
-It is recommended to work within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organaized. Instructions for setting up a virual enviornment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
+It is recommended to work within a virtual environment [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 
 #### PIP Dependencies
 
@@ -53,13 +50,11 @@ Once you have your virtual environment setup and running, install dependencies b
 pip install -r requirements.txt
 ```
 
-This will install all of the required packages we selected within the `requirements.txt` file.
-
 #### Environmental Variables
 Follow the **.env-sample** to create a .env file for your local setup
 
 ### Database Setup
-- Create two databases for **testing** and **development**
+- Create a database
 - Generate database tables from the migration files included by executing: 
   `python manage.py db upgrade`
 - Add dummy data by executing:
@@ -74,6 +69,8 @@ From within the project directory first ensure you are working using your create
 - To run the **test**, add fresh token for each of the roles specified above under roles. Then execute:
 `bash testing.sh` 
 
+
+***Note** You can also use `casting-agency-heroku.postman_collection.json` to run tests
 ***Note** Remember to stop the development server before running the test
 
 ## Endpoints
@@ -110,19 +107,19 @@ GET '/movies'
 POST '/movies'
 - Creates a new movie with the provided parameters
 - Request Arguments: None
-- Allowed users: Executive Producer
+- Allowed users: Casting Director, Executive Producer
 - Required permission (add:movies)
 - Request Body: {
-	"title": "Slap of the Century"
-	"release_date": "2/26/1996"
+	"title": "Golden Eye"
+	"release_date": "2/25/1984"
 }
 
 - Response
 {
   "movie": {
-    "id": 4,
-    "release_date": "Mon, 26 Feb 1996 00:00:00 GMT",
-    "title": "Slap of the Century"
+    "id": 2,
+    "release_date": "Sat, 25 Feb 1984 00:00:00 GMT",
+    "title": "Golden Eye"
   },
   "success": true
 }
@@ -130,26 +127,26 @@ POST '/movies'
 
 PATCH '/movies/<id>'
 - Updates a specific movie with the provided parameters
-- Request Arguments: movie_id (The ID of the movie to update)
+- Request Arguments: movie_id 
 - Allowed users: Executive Producer, Casting Director
 - Required permission (edit:movies)
 - Request Body: {
-	"title": "Silicon Valley"
+	"title": "Ready Player One"
 }
 
 - Response
 {
   "movie": {
     "id": 4,
-    "release_date": "Thu, 26 Feb 2004 00:00:00 GMT",
-    "title": "Silicon Valley"
+    "release_date": "Sun, 11 March 2018 00:00:00 GMT",
+    "title": "Ready Player One"
   },
   "success": true
 }
 
 DELETE '/movies/<id>'
 - Deletes a specific movie
-- Request Arguments: movie_id (The ID of the movie to delete)
+- Request Arguments: movie_id
 - Allowed users: Executive Producer
 - Required permission (delete:movie)
 - Response
@@ -157,7 +154,6 @@ DELETE '/movies/<id>'
   "delete": id,
   "success": true
 }
-
 
 
 # Actors
@@ -170,22 +166,22 @@ DELETE '/actors/<id>'
 GET '/actors'
 - Fetches all actors on the platform
 - Request Arguments: None
-- Allowed users: Executive Producer, Casting Assistant and casting Director
+- Allowed users: Executive Producer, Casting Assistant and Casting Director
 - Required permission (get:actors)
 - Response
 {
   "actors": [
     {
-      "age": 25,
+      "age": 35,
       "gender": "male",
-      "id": 3,
-      "name": "Kevin Hart"
+      "id": 2,
+      "name": "Ryan Reynolds"
     },
     {
-      "age": 20,
-      "gender": "male",
-      "id": 1,
-      "name": "Desmond Elliot"
+      "age": 30,
+      "gender": "female",
+      "id": 4,
+      "name": "Jennifer Lawrence"
     }
   ],
   "success": true
@@ -194,21 +190,21 @@ GET '/actors'
 POST '/actors'
 - Creates a new actor with the provided parameters
 - Request Arguments: None
-- Allowed users: Executive Producer and casting Director
+- Allowed users: Casting Director and Executive Producer 
 - Required permission (add:actors)
 - Request Body: {
-	"name": "Kunle Afolayan",
-	"age": 20,
+	"name": "Chriss Pratt",
+	"age": 35,
 	"gender": "male"
 }
 
 - Response
 {
   "actor": {
-    "age": 20,
-    "gender": "female",
+    "age": 35,
+    "gender": "male",
     "id": 4,
-    "name": "Kunle Afolayan"
+    "name": "Chriss Pratt"
   },
   "success": true
 }
@@ -216,27 +212,27 @@ POST '/actors'
 
 PATCH '/actors/<id>'
 - Updates a specific actor with the provided parameters
-- Request Arguments: actor_id (The ID of the actor to update)
-- Allowed users: Executive Producer and Casting Director
+- Request Arguments: actor_id
+- Allowed users: Casting Director and Executive Producer 
 - Required permission (edit:actor)
 - Request Body: {
-	"name": "RMD",
+	"name": "Chriss Pratt",
 }
 
 - Response
 {
   "actor": {
-    "age": 28,
-    "gender": "female",
+    "age": 35,
+    "gender": "male",
     "id": 4,
-    "name": "RMD"
+    "name": "Chriss Pratt"
   },
   "success": true
 }
 
 DELETE '/actors/<id>'
 - Deletes a specific actor
-- Request Arguments: actor_id (The ID of the actor to delete)
+- Request Arguments: actor_id
 - Required permission (delete:actors)
 - Response
 {
@@ -245,7 +241,7 @@ DELETE '/actors/<id>'
 }
 
 Errors 
-For errors, the server returns a json object with a description of the type of error. Find the description below:
+The server returns a json object with a description of the type of error.
 
 400 (Bad Request)
   {

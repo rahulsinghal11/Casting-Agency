@@ -6,9 +6,9 @@ from app import create_app
 from models import setup_db, Actors, Movies
 
 
-CASTING_ASSISTANT = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhLNTZLR0NKcjJSdzV6S3NIR3h6ayJ9.eyJpc3MiOiJodHRwczovL2NvZGVicm8udXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwMzdiMGFmZmIzN2QwMDA2ODI2MTQxYiIsImF1ZCI6Imh0dHA6Ly8xMjcuMC4wLjE6NTAwMC8iLCJpYXQiOjE2MTQzNDQ2NjYsImV4cCI6MTYxNDQzMTA2NiwiYXpwIjoiYXkzSkNUcmZVTkFhUFFza1djcFlORExFQVVNQ2NVcUciLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.kecKQG8TR_ZJj0WVABLRixwNewSJJDtVr96oIAnpwhN6iQ7hvtx6tgPW5eyMnu97VF-wCpNBf9-BKY-52YCC1VKGLQ3I1Fi996MhGWElIeH4PX3ZE98eTqnT2Q-Md-hC9V4by6OvKc88WJHyJ40kjDFV0ktDnoaskekmgPH_wk_8K3mdSsn5Bl5-u8DXFTV1ikrpdNCKgGnUZ9G_inQ3AP2NQ6GWalXYBvNyprz-RG3ZKAWskJ3UqPT5WRHcMdyGdnpKFbEZWrTYLQasgNVTCoVHBdWt5Ikb-DnzKVkz8aQa6wqwv7iuAO8EB0ihDRtxUXxURMDlGwJ7sSZ-yACF3A'
-CASTING_DIRECTOR = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhLNTZLR0NKcjJSdzV6S3NIR3h6ayJ9.eyJpc3MiOiJodHRwczovL2NvZGVicm8udXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwMzdiMDgyZjdiMTUxMDA3MDM4NDM5MSIsImF1ZCI6Imh0dHA6Ly8xMjcuMC4wLjE6NTAwMC8iLCJpYXQiOjE2MTQzNDUzMjAsImV4cCI6MTYxNDQzMTcyMCwiYXpwIjoiYXkzSkNUcmZVTkFhUFFza1djcFlORExFQVVNQ2NVcUciLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvcnMiLCJhZGQ6bW92aWVzIiwiZWRpdDphY3RvciIsImVkaXQ6bW92aWVzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiXX0.bfE9vueRAnuPTm-grcgwOZsfMK3YUPEY9MhbYZ4FDsAQhbWiUnBUIn5viYzUSXla0k2PYp9FZk6RPeSIrt754KXquZxIcAzBSkrIbovmOqVvCS9FZ_KgeqgknGCaFOdhptkWpLspN8EZnLGVdsq4FEpbm5nIbMco4NYZ2AdTTZwa3ZUDKvhaDEvQ6hz5tqxxBIP7XAUYLYzBSrm-3EXTM5Ys1St7RwAJbD-hmeHFZk9haX9vQp7p-bykuYXPpG-h2cyTNZdRpRO6sTQoHK7T37Ti4KLxCtGpXw41SZW9RQV5W98CKVZFrgrYTTJY0lPmOxLs0eNLXouTbFXTrObe3g'
-EXECUTIVE_PRODUCER = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhLNTZLR0NKcjJSdzV6S3NIR3h6ayJ9.eyJpc3MiOiJodHRwczovL2NvZGVicm8udXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwMzdiMDQxZmIzN2QwMDA2ODI2MTNmZCIsImF1ZCI6Imh0dHA6Ly8xMjcuMC4wLjE6NTAwMC8iLCJpYXQiOjE2MTQzNDUyNjQsImV4cCI6MTYxNDQzMTY2NCwiYXpwIjoiYXkzSkNUcmZVTkFhUFFza1djcFlORExFQVVNQ2NVcUciLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvcnMiLCJhZGQ6bW92aWVzIiwiZGVsZXRlOmFjdG9yIiwiZGVsZXRlOm1vdmllIiwiZWRpdDphY3RvciIsImVkaXQ6bW92aWVzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiXX0.da8skwRZHuIdKJLJ4i2ibAwAKs89LxpbxNgahj-1AnA3gCX9F6QDsrqCfgOxNwK-ccHSxf6XmERiiT-dc2syE2J4j3SmngHyZaf_gSIe2r2KcxIWNMLHYdZI56tWWDLLCNYNcWsHx6sbSHyw2-LpZnJwn7KUn7sLrNSkUpLPI7OXc5zu1CB9rMQNEywVGxP7_nRpQyU2EevKl9EGy61TIHzwwzsTD9F7FOsn_7mZQU7Bq51e1jR5NKoIal4a_gjH-a3PuvpEdD4X4pS0UQvi_A3IRJH4a0NJKAQ_RXgA8tUo4sucxaibyaBzD8c5w02K9BmN66Ds7G8yQbJlW97cUg'
+CASTING_ASSISTANT = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhLNTZLR0NKcjJSdzV6S3NIR3h6ayJ9.eyJpc3MiOiJodHRwczovL2NvZGVicm8udXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwMzdiMGFmZmIzN2QwMDA2ODI2MTQxYiIsImF1ZCI6Imh0dHA6Ly8xMjcuMC4wLjE6NTAwMC8iLCJpYXQiOjE2MTQ0OTgwOTEsImV4cCI6MTYxNDU4NDQ5MSwiYXpwIjoiYXkzSkNUcmZVTkFhUFFza1djcFlORExFQVVNQ2NVcUciLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.Mod3ZQYs20h8i49VCLCW0D5GFDAHR6hHkgbx0MynMLu35v_FuMYtdMftPQirAlm6jEjzv9LQyJNqSsL3rV6MRtCHgJG0-zxslKpA4c_zxMzbMEmBJFWJaTokwxf4OXH3DZUmZcWIwbSy97rF5CGbMk5Bv0t87Ine8Xklyu6o8ZklCUEkgwTb9rMnzUzGJm7KqznOBo8CUK0TEiOzsqfi5tqgI-KcnRjJYRvuoshVOvJeanMcOXlpjd9ebOO6QjJOR7nlLLqE6J_NIDTLYEu2iKwfcMyDrClhMoikGw-AY1rxdQ0_z6aueZmywyDJo6L7r15TYyrNVQqLN4EtiTIXLQ'
+CASTING_DIRECTOR = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhLNTZLR0NKcjJSdzV6S3NIR3h6ayJ9.eyJpc3MiOiJodHRwczovL2NvZGVicm8udXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwMzdiMDgyZjdiMTUxMDA3MDM4NDM5MSIsImF1ZCI6Imh0dHA6Ly8xMjcuMC4wLjE6NTAwMC8iLCJpYXQiOjE2MTQ0OTgzMjMsImV4cCI6MTYxNDU4NDcyMywiYXpwIjoiYXkzSkNUcmZVTkFhUFFza1djcFlORExFQVVNQ2NVcUciLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvcnMiLCJhZGQ6bW92aWVzIiwiZWRpdDphY3RvciIsImVkaXQ6bW92aWVzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiXX0.bM00n13NvPxrJdqsqlZDP5WvwRaIv7UIGm-x6FHdo2k9qi79Y5rXko-tMG7UyjxIzhT_L4oSbz2k2UBh79eaRRF6jYbmNyYVaV8w24KLHU_4caZDdxfgHEWHDs-KWJfxCFmJcz6o3vgqTWktz8dn0Wa0vu8i4zX1UQ6f-izoTKTrqP7A-YWgFuPOk7t97UuPt8sDFMcnJfgYDAVZeokWfcbkamEgVPMcSYkGjcVLBsqxEk2SaZnKk0cc-GSQ-A8Xd8VIoRgdsoiS3Eh25PSL_UIlLQ0AvvHk0BoEMqZIk_OK-47497EznYmyRlr9HHjfqGJYcjcnCjvfk6iveUAEWA'
+EXECUTIVE_PRODUCER = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlhLNTZLR0NKcjJSdzV6S3NIR3h6ayJ9.eyJpc3MiOiJodHRwczovL2NvZGVicm8udXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwMzdiMDQxZmIzN2QwMDA2ODI2MTNmZCIsImF1ZCI6Imh0dHA6Ly8xMjcuMC4wLjE6NTAwMC8iLCJpYXQiOjE2MTQ0OTg0MjMsImV4cCI6MTYxNDU4NDgyMywiYXpwIjoiYXkzSkNUcmZVTkFhUFFza1djcFlORExFQVVNQ2NVcUciLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImFkZDphY3RvcnMiLCJhZGQ6bW92aWVzIiwiZGVsZXRlOmFjdG9yIiwiZGVsZXRlOm1vdmllIiwiZWRpdDphY3RvciIsImVkaXQ6bW92aWVzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiXX0.SNwwLN7TyOcgVki7cAqXw89C46nIVb2NReA09LKb0hLrqx3MsriBhgqi96eXI96e8YslLDEK7f8WZiOBkGxG2DFTi2mpwuAOiMLrDPGKJTdyii3PojEfCkrF7J1MXxlUIlbk70Zw5Nbxtw5mKAAuc5KHxvHz94gsml0RsGzVFsF1v1yPLaFf8XWhR4nns_2hzlOV8t79OFC-1sWAct0bgtmg_hVWNoaNLbNUXaGwpzgONRYcV0N0xMM6fPLDzrEAjaElw-9N7k7bY6BbYO_PDisx5-BYRZsXNRttsQtHPK-vqUAETChAkdtYW5YMjLRa2RqfsU-lYv6hkC2QTqCvZw'
 
 
 class TriviaTestCase(unittest.TestCase):
@@ -52,7 +52,7 @@ class TriviaTestCase(unittest.TestCase):
     def test_edit_actors(self):
         response = self.client().patch(
             '/actors/2',
-            json={'name': 'Kafee'},
+            json={'name': 'Jack Black'},
             headers={"Authorization": "Bearer " + CASTING_DIRECTOR}
         )
 
@@ -71,22 +71,6 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertTrue(data['error'])
         self.assertEqual(data['message'], 'resource not found')
-        self.assertEqual(data['success'], False)
-
-    def test_bad_request_in_edit_actor(self):
-        response = self.client().patch(
-            '/actors/2',
-            json={'name': ''},
-            headers={"Authorization": "Bearer " + CASTING_DIRECTOR}
-        )
-
-        data = json.loads(response.data)
-        self.assertEqual(response.status_code, 400)
-        self.assertTrue(data['error'])
-        self.assertEqual(
-            data['message'],
-            'Bad Request, please check inputs'
-        )
         self.assertEqual(data['success'], False)
 
     def test_get_actors(self):
